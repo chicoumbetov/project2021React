@@ -15,7 +15,7 @@ class FilmItem extends Component {
                 />
                 <View style={styles.content_container}>
                     <View style={styles.header_container}>
-                        <Text style={styles.title_text}>Titre du film</Text>
+                        <Text style={styles.title_text}>{film.original_title}</Text>
                         <Text style={styles.vote_text}>Vote</Text>
                     </View>
                     <View style={styles.description_container}>
