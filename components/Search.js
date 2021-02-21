@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Button, TextInput, StyleSheet, Alert, FlatList, Text } from 'react-native';
+import { View, Button, TextInput, StyleSheet, Alert, FlatList, Text } from 'react-native';
 import films from '../Helpers/filmsData';
 import FilmItem from './FilmItem';
 
@@ -7,7 +7,7 @@ class Search extends Component {
   render() {
 
     return (
-      <ScrollView style={styles.main_container}>
+      <View style={styles.main_container}>
         <TextInput style={[styles.textinput, { marginBottom: 5 }]} placeholder='Titre du film' />
         <Button title='Rechercher'
           onPress={() => Alert.alert('"Rechercher" button pressed')}
@@ -17,7 +17,7 @@ class Search extends Component {
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => <FilmItem/>}
         />
-      </ScrollView>
+      </View>
     )
   }
 }
