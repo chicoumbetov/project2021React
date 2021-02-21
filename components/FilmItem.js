@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, Image } from "react-native"
 
 class FilmItem extends Component {
     render() {
+        //here we get props( info from filmData ) that was passed in Search.js
+        console.log(this.props)
+        const film = this.props.film;
+
         return (
             <View style={styles.main_container}>
                 <Image
@@ -18,6 +22,7 @@ class FilmItem extends Component {
                         <Text style={styles.description_text} numberOfLines={6}>Description</Text>
                         {/* La propriété numberOfLines permet de couper un texte si celui-ci est trop long, 
                         il suffit de définir un nombre maximum de ligne */}
+                        <Text>{film.overview}</Text>
                     </View>
                     <View style={styles.date_container}>
                         <Text style={styles.date_text}>Sorti le 00/00/0000</Text>
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 5
     },
-    // À noter également que j'ai défini les tailles de mes containersheader_container ,  description_container  et   date_container avec le style flex ( flex: 3  ,  flex: 7  ,  flex: 1 )
+    //j'ai défini les tailles de mes containers: header_container ,  description_container  et   date_container avec le style flex ( flex: 3  ,  flex: 7  ,  flex: 1 )
     //header of right side
     header_container: {
         flex: 3,                //first part of column 

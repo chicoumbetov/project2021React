@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Button, TextInput, StyleSheet, Alert, FlatList, Text } from 'react-native';
-import films from '../Helpers/filmsData';
 import FilmItem from './FilmItem';
+
+import films from '../Helpers/filmsData';
 
 class Search extends Component {
   render() {
@@ -15,7 +16,7 @@ class Search extends Component {
         <FlatList
           data={films}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <FilmItem/>}
+          renderItem={({item}) => <FilmItem film={item} />}
         />
       </View>
     )
