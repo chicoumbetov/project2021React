@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, Button, TextInput, StyleSheet, Alert, FlatList, Text } from 'react-native';
+import films from '../Helpers/filmsData';
+import FilmItem from './FilmItem';
 
 class Search extends Component {
   render() {
@@ -11,8 +13,9 @@ class Search extends Component {
           onPress={() => Alert.alert('"Rechercher" button pressed')}
         />
         <FlatList
-          data={[{ key: 'a'}, {key: 'b' }]}
-          renderItem={({item}) => <Text>{item.key}</Text>}
+          data={films}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => <FilmItem/>}
         />
       </ScrollView>
     )
