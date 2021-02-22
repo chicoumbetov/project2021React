@@ -3,15 +3,20 @@ import { View, Button, TextInput, StyleSheet, Alert, FlatList, Text } from 'reac
 import FilmItem from './FilmItem';
 
 import films from '../Helpers/filmsData';
+import { getFilmsFromApiWithSearchedText} from '../API/TheMovieDataBaseAPI';
 
 class Search extends Component {
+  _loadFilms() {
+    getFilmsFromApiWithSearchedText("star").then(data => console.log(data));
+  };
+
   render() {
 
     return (
       <View style={styles.main_container}>
         <TextInput style={[styles.textinput, { marginBottom: 5 }]} placeholder='Titre du film' />
         <Button title='Rechercher'
-          onPress={() => Alert.alert('"Rechercher" button pressed')}
+          onPress={() => this._loadFilms()}
         />
         <FlatList
           data={films}

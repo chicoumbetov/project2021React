@@ -25,7 +25,7 @@ class FilmItem extends Component {
                         <Text>{film.overview}</Text>
                     </View>
                     <View style={styles.date_container}>
-                        <Text style={styles.date_text}>Sorti le 00/00/0000</Text>
+                        <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
                     </View>
                 </View>
             </View>
