@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image } from "react-native"
 class FilmItem extends Component {
     render() {
         //here we get props( info from filmData ) that was passed in Search.js
-        console.log(this.props)
+        //console.log(this.props)       //this will show all the data came from parent component that has it from API
         const film = this.props.film;
 
         return (
