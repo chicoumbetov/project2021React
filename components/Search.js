@@ -3,13 +3,14 @@ import { View, Button, TextInput, StyleSheet, Alert, FlatList, Text } from 'reac
 import FilmItem from './FilmItem';
 
 //import films from '../Helpers/filmsData';   //this.state.films is used from API instead of 'films' from mock data in Helpers folder
-import { getFilmsFromApiWithSearchedText} from '../API/TheMovieDataBaseAPI';
+import { getFilmsFromApiWithSearchedText } from '../API/TheMovieDataBaseAPI';
 
 class Search extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
+    this.state = {
       films: [],
+      isLoading: false // Par défaut à false car il n'y a pas de chargement tant qu'on ne lance pas de recherche
     }
     this.searchedText = ""
   }
@@ -18,8 +19,15 @@ class Search extends Component {
   _loadFilms() {
     //search movie ONLY if text is typed
     if (this.searchedText.length > 0) {
+      //Lancement du charchement (preloader)
+      this.setState({isLoading: true });
       //search movie by typed text
-      getFilmsFromApiWithSearchedText(this.searchedText).then(data => this.setState({ films: data.results }));
+      getFilmsFromApiWithSearchedText(this.searchedText).then(data => {
+        this.setState({ 
+          films: data.results,
+        isLoading: false //Arrêt du charchement stop preloader
+        })
+      });
     }
   };
 
@@ -30,16 +38,18 @@ class Search extends Component {
 
 
   render() {
+    console.log(this.state.isLoading); //check if isLoading switches between false and true
     console.log("Render. setState is called, components called with movie data ");
     return (
       <View style={styles.main_container}>
-        <TextInput 
+        <TextInput
           //let to find exact movie that we search by typing in input & clicking "rechercher" button
           onChangeText={(text) => this._searchTextInputChanged(text)}
-          
+
           //let us search by clicking "enter" on keyboard and not only by clicking on "rechercher" button
           onSubmitEditing={() => this._loadFilms()}
-          style={[styles.textinput, { marginBottom: 5 }]} 
+
+          style={[styles.textinput, { marginBottom: 5 }]}
           placeholder='Titre du film' />
         <Button title='Rechercher'
           onPress={() => this._loadFilms()}
@@ -47,7 +57,7 @@ class Search extends Component {
         <FlatList
           data={this.state.films}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <FilmItem film={item} />}
+          renderItem={({ item }) => <FilmItem film={item} />}
         />
       </View>
     )
