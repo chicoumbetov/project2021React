@@ -8,19 +8,37 @@ import { getFilmsFromApiWithSearchedText} from '../API/TheMovieDataBaseAPI';
 class Search extends Component {
   constructor(props) {
     super(props)
-    this.state = { films: [] }
+    this.state = { 
+      films: [],
+      searchedText: "" 
+    }
   }
 
 
   _loadFilms() {
-    getFilmsFromApiWithSearchedText("star").then(data => this.setState({ films: data.results }));
+    //search movie ONLY if text is typed
+    if (this.state.searchedText.length > 0) {
+      //search movie by typed text
+      getFilmsFromApiWithSearchedText(this.state.searchedText).then(data => this.setState({ films: data.results }));
+    }
   };
+
+  //get typed text in input and use it in _loadFilms to render
+  _searchTextInputChanged(text) {
+    this.setState({ searchedText: text })
+  }
+
 
   render() {
     console.log("setState is called, components called with movie data ");
     return (
       <View style={styles.main_container}>
-        <TextInput style={[styles.textinput, { marginBottom: 5 }]} placeholder='Titre du film' />
+        <TextInput 
+          //let to find exact movie that we search by typing in input
+          onChangeText={(text) => this._searchTextInputChanged(text)}
+          
+          style={[styles.textinput, { marginBottom: 5 }]} 
+          placeholder='Titre du film' />
         <Button title='Rechercher'
           onPress={() => this._loadFilms()}
         />
