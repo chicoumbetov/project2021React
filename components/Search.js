@@ -10,27 +10,27 @@ class Search extends Component {
     super(props)
     this.state = { 
       films: [],
-      searchedText: "" 
     }
+    this.searchedText = ""
   }
 
 
   _loadFilms() {
     //search movie ONLY if text is typed
-    if (this.state.searchedText.length > 0) {
+    if (this.searchedText.length > 0) {
       //search movie by typed text
-      getFilmsFromApiWithSearchedText(this.state.searchedText).then(data => this.setState({ films: data.results }));
+      getFilmsFromApiWithSearchedText(this.searchedText).then(data => this.setState({ films: data.results }));
     }
   };
 
   //get typed text in input and use it in _loadFilms to render
   _searchTextInputChanged(text) {
-    this.setState({ searchedText: text })
+    this.searchedText = text;
   }
 
 
   render() {
-    console.log("setState is called, components called with movie data ");
+    console.log("Render. setState is called, components called with movie data ");
     return (
       <View style={styles.main_container}>
         <TextInput 
