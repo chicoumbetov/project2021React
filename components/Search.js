@@ -34,9 +34,11 @@ class Search extends Component {
     return (
       <View style={styles.main_container}>
         <TextInput 
-          //let to find exact movie that we search by typing in input
+          //let to find exact movie that we search by typing in input & clicking "rechercher" button
           onChangeText={(text) => this._searchTextInputChanged(text)}
           
+          //let us search by clicking "enter" on keyboard and not only by clicking on "rechercher" button
+          onSubmitEditing={() => this._loadFilms()}
           style={[styles.textinput, { marginBottom: 5 }]} 
           placeholder='Titre du film' />
         <Button title='Rechercher'
