@@ -6,8 +6,14 @@ import films from '../Helpers/filmsData';
 import { getFilmsFromApiWithSearchedText} from '../API/TheMovieDataBaseAPI';
 
 class Search extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { films: [] }
+  }
+
+
   _loadFilms() {
-    getFilmsFromApiWithSearchedText("star").then(data => console.log(data));
+    getFilmsFromApiWithSearchedText("star").then(data => this.setState({ films: data.results }));
   };
 
   render() {
@@ -19,7 +25,7 @@ class Search extends Component {
           onPress={() => this._loadFilms()}
         />
         <FlatList
-          data={films}
+          data={this.state.films}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => <FilmItem film={item} />}
         />
