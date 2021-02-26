@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { View, Button, TextInput, StyleSheet, Alert, FlatList, Text } from 'react-native';
+import {
+  View, Button,
+  TextInput, StyleSheet,
+  FlatList, ActivityIndicator
+} from 'react-native';
 import FilmItem from './FilmItem';
 
 //import films from '../Helpers/filmsData';   //this.state.films is used from API instead of 'films' from mock data in Helpers folder
@@ -15,17 +19,27 @@ class Search extends Component {
     this.searchedText = ""
   }
 
+  _displayLoading() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loading_container}>
+          <ActivityIndicator size='large' />
+          {/* Le component ActivityIndicator possède une propriété size pour définir la taille du visuel de chargement : small ou large. Par défaut size vaut small, on met donc large pour que le chargement soit bien visible */}
+        </View>
+      )
+    }
+  }
 
   _loadFilms() {
     //search movie ONLY if text is typed
     if (this.searchedText.length > 0) {
       //Lancement du charchement (preloader)
-      this.setState({isLoading: true });
+      this.setState({ isLoading: true });
       //search movie by typed text
       getFilmsFromApiWithSearchedText(this.searchedText).then(data => {
-        this.setState({ 
+        this.setState({
           films: data.results,
-        isLoading: false //Arrêt du charchement stop preloader
+          isLoading: false //Arrêt du charchement stop preloader
         })
       });
     }
@@ -39,7 +53,7 @@ class Search extends Component {
 
   render() {
     console.log(this.state.isLoading); //check if isLoading switches between false and true
-    console.log("Render. setState is called, components called with movie data ");
+    //console.log("Render. setState is called, components called with movie data ");
     return (
       <View style={styles.main_container}>
         <TextInput
@@ -59,6 +73,7 @@ class Search extends Component {
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => <FilmItem film={item} />}
         />
+        {this._displayLoading()}
       </View>
     )
   }
@@ -79,6 +94,15 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     borderRadius: 10
   },
+  loading_container: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 100,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
 
 export default Search;
