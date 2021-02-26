@@ -71,6 +71,10 @@ class Search extends Component {
         <FlatList
           data={this.state.films}
           keyExtractor={item => item.id.toString()}
+          onEndReachedThreshold={0.5}
+          onEndReached={( {distanceFromEnd}) => {
+            console.log("onEndReached", distanceFromEnd)
+          }}
           renderItem={({ item }) => <FilmItem film={item} />}
         />
         {this._displayLoading()}
