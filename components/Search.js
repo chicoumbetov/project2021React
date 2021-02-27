@@ -108,7 +108,6 @@ class Search extends Component {
 
 const styles = StyleSheet.create({
   main_container: {
-    marginTop: 20,
     flex: 1
   },
   textinput: {
