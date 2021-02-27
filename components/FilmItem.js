@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { getImageFromApi } from '../API/TheMovieDataBaseAPI'
 
 class FilmItem extends Component {
     render() {
         //here we get props( info from filmData ) that was passed in Search.js
         //console.log(this.props)       //this will show all the data came from parent component that has it from API
+        
         const film = this.props.film;
-
+        const displayDetailForFilm = this.props.displayDetailForFilm;
+        //alternative way to write using ES6:
+        //const {film, displayDetailForFilm} = this.props
+        
         return (
-            <View style={styles.main_container}>
+            <TouchableOpacity onPress={() => displayDetailForFilm(film.id)}
+                              style={styles.main_container}
+            >
                 <Image
                     style={styles.image}
                     source={{ uri: getImageFromApi(film.poster_path) }}
@@ -29,7 +35,7 @@ class FilmItem extends Component {
                         <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 }

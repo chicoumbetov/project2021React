@@ -72,11 +72,20 @@ class Search extends Component {
 
   }
 
+  _displayDetailForFilm = (idFilm) => {
+    console.log("Display film with id " + idFilm)
+    this.props.navigation.navigate("FilmDetail");
+  }
+
   render() {
     console.log(this.state.isLoading); //check if isLoading switches between false and true
     //console.log("Render. setState is called, components called with movie data ");
     return (
-      <View style={styles.main_container}>
+      <View style={styles.main_container}
+        // On définit la props onPress sur notre View pour appeler notre fonction displayDetailForFilm
+        //onPress={() => displayDetailForFilm(film.id)}
+
+      >
         <TextInput
           //let to find exact movie that we search by typing in input & clicking "rechercher" button
           onChangeText={(text) => this._searchTextInputChanged(text)}
@@ -98,7 +107,7 @@ class Search extends Component {
               this._loadFilms()
             }
           }}
-          renderItem={({ item }) => <FilmItem film={item} />}
+          renderItem={({ item }) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} />}
         />
         {this._displayLoading()}
       </View>
