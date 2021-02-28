@@ -5,10 +5,11 @@ import {
 
 class FilmDetail extends Component {
     render() {
+        console.log(this.props.navigation.state)
         return (
             <View style={styles.main_container}>
                 <Text>
-                    Détail du film
+                    Détail du film {this.props.navigation.state.params.idFilm}
                 </Text>
             </View>
         )

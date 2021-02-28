@@ -74,12 +74,15 @@ class Search extends Component {
 
   _displayDetailForFilm = (idFilm) => {
     console.log("Display film with id " + idFilm)
-    this.props.navigation.navigate("FilmDetail");
+    this.props.navigation.navigate("FilmDetail", { idFilm: idFilm });
   }
 
   render() {
-    console.log(this.state.isLoading); //check if isLoading switches between false and true
+    //console.log(this.state.isLoading); //check if isLoading switches between false and true
     //console.log("Render. setState is called, components called with movie data ");
+    
+    //console.log(this.props); //On a un objet navigation qui s'est ajouté à nos props. Et bien, c'est cet objet qui va nous permettre d'utiliser la navigation dans notre component Search. 
+
     return (
       <View style={styles.main_container}
         // On définit la props onPress sur notre View pour appeler notre fonction displayDetailForFilm
