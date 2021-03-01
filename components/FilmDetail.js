@@ -6,6 +6,7 @@ import {
 import { getFilmDetailFromApi, getImageFromApi } from '../API/TheMovieDataBaseAPI';
 import moment from 'moment'
 import numeral from 'numeral'
+import { connect } from 'react-redux';
 
 class FilmDetail extends Component {
 
@@ -89,6 +90,7 @@ class FilmDetail extends Component {
     }
 
     render() {
+        console.log(this.props)
         //console.log(this.props.navigation)
         console.log("Component FilmDetail rendu")
         // show object all what we want to show in FilmDetail:
@@ -161,4 +163,10 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FilmDetail;
+//connecter state globale aux props du component FilmDetail
+const mapStateToProps = (state) => {
+    return {
+        favoritesFilm: state.favoritesFilm
+    }
+}
+export default connect(mapStateToProps)(FilmDetail);
