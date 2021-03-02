@@ -40,7 +40,7 @@ class FilmDetail extends Component {
 
     componentDidUpdate() {
         console.log("componentDidUpdate invoked")
-        console.log(this.props.favoritesFilm)
+        //console.log(this.props.favoritesFilm)
     }
 
     _displayFavoriteImage() {

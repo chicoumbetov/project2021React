@@ -5,6 +5,7 @@ import {
   FlatList, ActivityIndicator
 } from 'react-native';
 import FilmItem from './FilmItem';
+import { connect } from 'react-redux';
 
 //import films from '../Helpers/filmsData';   //this.state.films is used from API instead of 'films' from mock data in Helpers folder
 import { getFilmsFromApiWithSearchedText } from '../API/TheMovieDataBaseAPI';
@@ -18,17 +19,6 @@ class Search extends Component {
     this.state = {
       films: [],
       isLoading: false // Par défaut à false car il n'y a pas de chargement tant qu'on ne lance pas de recherche
-    }
-  }
-
-  _displayLoading() {
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.loading_container}>
-          <ActivityIndicator size='large' />
-          {/* Le component ActivityIndicator possède une propriété size pour définir la taille du visuel de chargement : small ou large. Par défaut size vaut small, on met donc large pour que le chargement soit bien visible */}
-        </View>
-      )
     }
   }
 
@@ -77,16 +67,28 @@ class Search extends Component {
     this.props.navigation.navigate("FilmDetail", { idFilm: idFilm });
   }
 
+
+  _displayLoading() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loading_container}>
+          <ActivityIndicator size='large' />
+          {/* Le component ActivityIndicator possède une propriété size pour définir la taille du visuel de chargement : small ou large. Par défaut size vaut small, on met donc large pour que le chargement soit bien visible */}
+        </View>
+      )
+    }
+  }
+
   render() {
     //console.log(this.state.isLoading); //check if isLoading switches between false and true
     //console.log("Render. setState is called, components called with movie data ");
-    
+
     //console.log(this.props); //On a un objet navigation qui s'est ajouté à nos props. Et bien, c'est cet objet qui va nous permettre d'utiliser la navigation dans notre component Search. 
 
     return (
       <View style={styles.main_container}
-        // On définit la props onPress sur notre View pour appeler notre fonction displayDetailForFilm
-        //onPress={() => displayDetailForFilm(film.id)}
+      // On définit la props onPress sur notre View pour appeler notre fonction displayDetailForFilm
+      //onPress={() => displayDetailForFilm(film.id)}
 
       >
         <TextInput
@@ -103,6 +105,8 @@ class Search extends Component {
         />
         <FlatList
           data={this.state.films}
+          // On utilise la prop extraData pour indiquer à notre FlatList que d’autres données doivent être prises en compte si on lui demande de se re-rendre
+          extraData={this.props.favoritesFilm}
           keyExtractor={item => item.id.toString()}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
@@ -110,7 +114,14 @@ class Search extends Component {
               this._loadFilms()
             }
           }}
-          renderItem={({ item }) => <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} />}
+          renderItem={({ item }) => 
+            <FilmItem 
+                  film={item} 
+                  displayDetailForFilm={this._displayDetailForFilm} 
+                  // Ajout d'une props isFilmFavorite pour indiquer à l'item d'afficher un 🖤 ou non
+                  isFilmFavorite={(this.props.favoritesFilm.findIndex(film => film.id === item.id) !== -1) ? true : false}
+            />
+          }
         />
         {this._displayLoading()}
       </View>
@@ -143,4 +154,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Search;
+// On connecte le store Redux, ainsi que les films favoris du state de notre application, à notre component Search
+const mapStateToProps = state => {
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
+
+export default connect(mapStateToProps)(Search)

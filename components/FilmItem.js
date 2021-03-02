@@ -4,18 +4,33 @@ import { getImageFromApi } from '../API/TheMovieDataBaseAPI'
 
 class FilmItem extends Component {
 
+    _displayFavoriteImage() {
+        if (this.props.isFilmFavorite) {
+            // Film is in favorite
+            // Si la props isFilmFavorite vaut true, on affiche le 🖤
+            return (
+                <Image
+                    source={require('../Images/ic_favorite.png')}
+                    style={styles.favorite_image}
+                />
+            )
+        }
+
+    }
+
     render() {
         //here we get props( info from filmData ) that was passed in Search.js
         //console.log(this.props)       //this will show all the data came from parent component that has it from API
-        
         const film = this.props.film;
         const displayDetailForFilm = this.props.displayDetailForFilm;
         //alternative way to write using ES6:
         //const {film, displayDetailForFilm} = this.props
-        
+        console.log("FilmItem rendered")
         return (
-            <TouchableOpacity onPress={() => displayDetailForFilm(film.id)}
-                              style={styles.main_container}
+            
+            <TouchableOpacity
+                onPress={() => displayDetailForFilm(film.id)}
+                style={styles.main_container}
             >
                 <Image
                     style={styles.image}
@@ -23,7 +38,7 @@ class FilmItem extends Component {
                 />
                 <View style={styles.content_container}>
                     <View style={styles.header_container}>
-                        
+                        {this._displayFavoriteImage()}
                         <Text style={styles.title_text}>{film.original_title}</Text>
                         <Text style={styles.vote_text}>{film.vote_average}</Text>
                     </View>
@@ -99,8 +114,9 @@ const styles = StyleSheet.create({
     },
 
     favorite_image: {
-        width: 40,
-        height: 40
+        width: 25,
+        height: 25,
+        marginRight: 5
     }
 })
 
