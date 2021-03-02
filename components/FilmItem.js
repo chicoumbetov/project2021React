@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { getImageFromApi } from '../API/TheMovieDataBaseAPI'
 
 class FilmItem extends Component {
+
     render() {
         //here we get props( info from filmData ) that was passed in Search.js
         //console.log(this.props)       //this will show all the data came from parent component that has it from API
@@ -22,6 +23,7 @@ class FilmItem extends Component {
                 />
                 <View style={styles.content_container}>
                     <View style={styles.header_container}>
+                        
                         <Text style={styles.title_text}>{film.original_title}</Text>
                         <Text style={styles.vote_text}>{film.vote_average}</Text>
                     </View>
@@ -94,6 +96,11 @@ const styles = StyleSheet.create({
     date_text: {
         textAlign: 'right',
         fontSize: 14
+    },
+
+    favorite_image: {
+        width: 40,
+        height: 40
     }
 })
 
